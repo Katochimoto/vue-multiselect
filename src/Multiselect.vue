@@ -9,6 +9,14 @@
     @keydown.enter.tab.stop.self="addPointerElement($event)"
     @keyup.esc="deactivate()"
     class="multiselect">
+      <slot name="title">
+        <label
+          v-if="title"
+          v-text="title"
+          class="multiselect__title"
+          @mousedown.prevent.stop="toggle()"
+        />
+      </slot>
       <slot name="caret" :toggle="toggle">
         <div @mousedown.prevent.stop="toggle()" class="multiselect__select"></div>
       </slot>
@@ -63,7 +71,7 @@
             <template>{{ currentOptionLabel }}</template>
           </slot>
         </span>
-        <span 
+        <span
           v-if="isPlaceholderVisible"
           class="multiselect__placeholder"
           @mousedown.prevent="toggle">
@@ -276,41 +284,45 @@ export default {
     tabindex: {
       type: Number,
       default: 0
+    },
+    title: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-    isSingleLabelVisible() {
+    isSingleLabelVisible () {
       return (
         this.singleValue &&
         (!this.isOpen || !this.searchable) &&
         !this.visibleValues.length
       )
     },
-    isPlaceholderVisible() {
+    isPlaceholderVisible () {
       return !this.internalValue.length && (!this.searchable || !this.isOpen)
     },
-    visibleValues() {
+    visibleValues () {
       return this.multiple ? this.internalValue.slice(0, this.limit) : []
     },
-    singleValue() {
+    singleValue () {
       return this.internalValue[0]
     },
-    deselectLabelText() {
+    deselectLabelText () {
       return this.showLabels ? this.deselectLabel : ''
     },
-    deselectGroupLabelText() {
+    deselectGroupLabelText () {
       return this.showLabels ? this.deselectGroupLabel : ''
     },
-    selectLabelText() {
+    selectLabelText () {
       return this.showLabels ? this.selectLabel : ''
     },
-    selectGroupLabelText() {
+    selectGroupLabelText () {
       return this.showLabels ? this.selectGroupLabel : ''
     },
-    selectedLabelText() {
+    selectedLabelText () {
       return this.showLabels ? this.selectedLabel : ''
     },
-    inputStyle() {
+    inputStyle () {
       if (
         this.searchable ||
         (this.multiple && this.value && this.value.length)
@@ -321,12 +333,12 @@ export default {
           : { width: '0', position: 'absolute', padding: '0' }
       }
     },
-    contentStyle() {
+    contentStyle () {
       return this.options.length
         ? { display: 'inline-block' }
         : { display: 'block' }
     },
-    isAbove() {
+    isAbove () {
       if (this.openDirection === 'above' || this.openDirection === 'top') {
         return true
       } else if (
@@ -338,7 +350,7 @@ export default {
         return this.prefferedOpenDirection === 'above'
       }
     },
-    showSearchInput() {
+    showSearchInput () {
       return (
         this.searchable &&
         (this.hasSingleSelectedSlot &&
@@ -359,10 +371,9 @@ fieldset[disabled] .multiselect {
 .multiselect__spinner {
   position: absolute;
   right: 1px;
-  top: 1px;
-  width: 48px;
-  height: 35px;
-  background: #fff;
+  bottom: 1px;
+  width: 40px;
+  height: 38px;
   display: block;
 }
 
@@ -584,7 +595,7 @@ fieldset[disabled] .multiselect {
   width: 40px;
   height: 38px;
   right: 1px;
-  top: 1px;
+  bottom: 1px;
   padding: 4px 8px;
   margin: 0;
   text-decoration: none;

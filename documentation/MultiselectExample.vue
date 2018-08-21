@@ -5,6 +5,7 @@ div
     label="name",
     track-by="name",
     placeholder="Pick badges",
+    title="Pick badges"
     :options="badges",
     :multiple="true",
     :show-labels="false",
