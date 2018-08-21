@@ -37,6 +37,7 @@
             <strong class="multiselect__strong" v-text="limitText(internalValue.length - limit)"/>
           </slot>
         </template>
+        <slot name="close"></slot>
         <transition name="multiselect__loading">
           <slot name="loading">
             <div v-show="loading" class="multiselect__spinner"/>
