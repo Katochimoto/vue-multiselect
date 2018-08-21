@@ -14,7 +14,7 @@
           v-if="title"
           v-text="title"
           class="multiselect__title"
-          @mousedown.prevent.stop="toggle()"
+          @mousedown.prevent.stop="activate()"
         />
       </slot>
       <slot name="caret" :toggle="toggle">
